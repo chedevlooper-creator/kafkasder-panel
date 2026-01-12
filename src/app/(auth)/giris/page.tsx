@@ -37,12 +37,19 @@ export default function LoginPage() {
   });
 
   async function onSubmit(data: LoginFormData): Promise<void> {
-    const success = await login(data.email, data.password);
-    if (success) {
-      toast.success("Giriş başarılı!");
-      router.push("/genel");
-    } else {
-      toast.error(error || "Hatalı giriş bilgileri");
+    if (isLoading) return;
+
+    try {
+      const success = await login(data.email, data.password);
+      if (success) {
+        toast.success("Giriş başarılı!");
+        router.push("/genel");
+      } else if (error) {
+        toast.error(error);
+      }
+    } catch (err) {
+      toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
+      console.error("Login error:", err);
     }
   }
 

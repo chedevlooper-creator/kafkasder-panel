@@ -109,6 +109,13 @@ export const useUserStore = create<UserState>()((set) => ({
   },
 
   login: async (email: string, password: string) => {
+    // Prevent multiple concurrent login attempts
+    const state = useUserStore.getState();
+    if (state.isLoading) {
+      console.log("⏳ Login already in progress, skipping...");
+      return false;
+    }
+
     console.log("🔥 Login function called", {
       email,
       passwordLength: password.length,
@@ -122,6 +129,9 @@ export const useUserStore = create<UserState>()((set) => ({
 
     // Set demo session cookie for middleware
     document.cookie = "demo-session=true; path=/; max-age=86400";
+
+    // Simulate network delay for realistic feel and to prevent double submission
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
     set({
       user: demoUser,
