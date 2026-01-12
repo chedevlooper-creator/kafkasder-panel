@@ -4,7 +4,31 @@ Bu proje, AI asistanlarının daha etkili çalışabilmesi için MCP server'lar�
 
 ## Kurulu MCP Server'lar
 
-### 1. Supabase MCP
+### 1. Shadcn MCP 🎨
+
+Shadcn/UI component registry ve tema entegrasyonu.
+
+**Özellikler:**
+
+- Component yükleme ve güncelleme
+- Tema değişiklikleri (tweakcn.com)
+- Custom registry desteği
+- Component preview
+
+**Kurulum:**
+
+```bash
+# Registry URL (tweakcn themes için)
+REGISTRY_URL=https://tweakcn.com/r/themes/registry.json
+```
+
+**Kullanım:**
+
+- "Install shadcn button component"
+- "Apply tweakcn theme to project"
+- "Update all shadcn components"
+
+### 2. Supabase MCP
 
 Veritabanı işlemleri için Supabase entegrasyonu.
 
@@ -22,7 +46,25 @@ Veritabanı işlemleri için Supabase entegrasyonu.
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
-### 2. Filesystem MCP
+### 3. Vercel MCP
+
+Vercel deployment ve proje yönetimi.
+
+**Özellikler:**
+
+- Deploy işlemleri
+- Environment variables yönetimi
+- Domain ayarları
+- Build logs
+
+**Kurulum:**
+
+```bash
+# Vercel API Token
+VERCEL_TOKEN=your_vercel_token
+```
+
+### 4. Filesystem MCP
 
 Proje dosyalarına erişim sağlar.
 
@@ -32,7 +74,7 @@ Proje dosyalarına erişim sağlar.
 - `public/` - Statik dosyalar
 - `supabase/` - Supabase migrations
 
-### 3. GitHub MCP
+### 5. GitHub MCP
 
 GitHub entegrasyonu için.
 
@@ -51,7 +93,7 @@ GitHub entegrasyonu için.
 GITHUB_TOKEN=your_github_token
 ```
 
-### 4. Memory MCP
+### 6. Memory MCP
 
 Kalıcı bellek ve context yönetimi.
 
@@ -66,9 +108,7 @@ Kalıcı bellek ve context yönetimi.
 ### Claude Desktop
 
 1. `claude_desktop_config.json` dosyasını düzenleyin:
-   - `YOUR_SUPABASE_URL` → Gerçek Supabase URL
-   - `YOUR_SUPABASE_SERVICE_ROLE_KEY` → Service Role Key
-   - `YOUR_GITHUB_TOKEN` → GitHub PAT
+   - Tokenları gerçek değerlerle değiştirin
 
 2. Dosyayı Claude Desktop config klasörüne kopyalayın:
 
@@ -93,13 +133,39 @@ Kalıcı bellek ve context yönetimi.
 opencode --mcp-config .mcp/config.json
 ```
 
+## Örnek Kullanımlar
+
+### Shadcn Tema Uygulama
+
+```
+Claude: "Apply the nbbbbbbbbb theme from tweakcn to the project"
+```
+
+### Component Yükleme
+
+```
+Claude: "Install shadcn card and dialog components"
+```
+
+### Vercel Deploy
+
+```
+Claude: "Deploy to production on Vercel"
+```
+
+### Supabase Tablo Oluşturma
+
+```
+Claude: "Create a new members table in Supabase with RLS"
+```
+
 ## Güvenlik Notları
 
 ⚠️ **ÖNEMLİ:**
 
 - `SUPABASE_SERVICE_ROLE_KEY` asla client-side'da kullanılmamalı
 - `.env` dosyası asla commit edilmemeli
-- GitHub token'ı minimum gerekli scope'larla oluşturun
+- Token'ları minimum gerekli scope'larla oluşturun
 
 ## Sorun Giderme
 
@@ -112,6 +178,11 @@ npx clear-npx-cache
 # Bağımlılıkları yeniden yükle
 npm install
 ```
+
+### Shadcn MCP Bağlantı Hatası
+
+- Registry URL'in doğru olduğunu kontrol edin
+- `shadcn@canary` versiyonunu kullandığınızdan emin olun
 
 ### Supabase Bağlantı Hatası
 
