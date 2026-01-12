@@ -147,6 +147,10 @@ CLAUDE.md
 AGENTS.md
 *.ai.md
 
+# MCP configs with secrets (DO NOT COMMIT)
+.mcp/claude_desktop_config.json
+.mcp/config.json
+
 # Development notes (DO NOT COMMIT)
 PROJE_DOKUMANTASYONU.md
 TODO.md

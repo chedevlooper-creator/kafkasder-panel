@@ -105,12 +105,27 @@ Kalıcı bellek ve context yönetimi.
 
 ## Kullanım
 
-### Claude Desktop
+### Kurulum
 
-1. `claude_desktop_config.json` dosyasını düzenleyin:
-   - Tokenları gerçek değerlerle değiştirin
+1. **Örnek konfigürasyon dosyasını kopyalayın:**
 
-2. Dosyayı Claude Desktop config klasörüne kopyalayın:
+   ```bash
+   cp .mcp/claude_desktop_config.example.json .mcp/claude_desktop_config.json
+   ```
+
+2. **Environment variable'ları ayarlayın:**
+
+   ```bash
+   # .zshrc veya .bashrc dosyanıza ekleyin:
+   export SUPABASE_ACCESS_TOKEN="your_supabase_service_role_key"
+   export VERCEL_TOKEN="your_vercel_token"
+   export GITHUB_TOKEN="your_github_token"
+
+   # Değişiklikleri uygulayın:
+   source ~/.zshrc  # veya source ~/.bashrc
+   ```
+
+3. **Claude Desktop için:**
 
    ```bash
    # macOS
@@ -120,7 +135,13 @@ Kalıcı bellek ve context yönetimi.
    copy .mcp\claude_desktop_config.json %APPDATA%\Claude\claude_desktop_config.json
    ```
 
-3. Claude Desktop'ı yeniden başlatın.
+4. **Claude Desktop'ı yeniden başlatın.**
+
+### Claude Desktop
+
+**Not:** Artık tokenları direkt config dosyasına yazmıyoruz. Environment variable'lar kullanıyoruz.
+
+1. Yukarıdaki kurulum adımlarını tamamlayın
 
 ### VS Code / Cursor
 
