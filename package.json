@@ -47,8 +47,7 @@
     "test:e2e:debug": "playwright test --debug",
     "db:seed": "tsx scripts/seed.ts",
     "db:migrate": "npx supabase db push",
-    "clean": "rm -rf .next out node_modules/.cache",
-    "prepare": "husky"
+    "clean": "rm -rf .next out node_modules/.cache"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
