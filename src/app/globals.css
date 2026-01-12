@@ -1,0 +1,582 @@
+@import "tailwindcss";
+
+/* Kafkasder Modern SaaS Theme - Logo Uyumlu Teal Tema */
+:root {
+  --radius: 0.5rem;
+
+  /* Arka Plan - Ferah, nötr gri-beyaz */
+  --background: 180 10% 97%;
+  --foreground: 220 15% 15%;
+
+  /* Marka Renkleri - Logo Teal (#1a8a8a) */
+  --primary: 180 68% 32%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Yüzeyler ve Kartlar - Net ayrım için beyaz */
+  --card: 0 0% 100%;
+  --card-foreground: 220 15% 15%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 15% 15%;
+
+  /* İkincil - Soft teal tonu */
+  --secondary: 180 15% 95%;
+  --secondary-foreground: 180 40% 25%;
+
+  /* Sessiz ve Vurgu */
+  --muted: 180 10% 94%;
+  --muted-foreground: 220 10% 40%;
+  --accent: 180 15% 90%;
+  --accent-foreground: 180 40% 25%;
+
+  /* Kenarlık ve Girdiler */
+  --border: 180 12% 85%;
+  --input: 180 10% 96%;
+  --ring: 180 68% 32%;
+
+  /* Anlamsal Renkler */
+  --destructive: 0 72% 51%;
+  --success: 142 71% 45%;
+  --warning: 38 92% 50%;
+
+  /* Grafik Renkleri - Teal uyumlu */
+  --chart-1: 180 68% 32%;
+  --chart-2: 210 70% 50%;
+  --chart-3: 142 71% 45%;
+  --chart-4: 38 92% 50%;
+  --chart-5: 270 60% 55%;
+
+  /* Kenar Çubuğu - Koyu teal tema */
+  --sidebar: 180 25% 18%;
+  --sidebar-foreground: 180 5% 92%;
+  --sidebar-primary: 180 55% 45%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 180 20% 24%;
+  --sidebar-accent-foreground: 180 5% 96%;
+  --sidebar-border: 180 18% 28%;
+  --sidebar-ring: 180 55% 45%;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  /* Disable smooth scrolling for instant response */
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    /* @apply bg-background text-foreground; */
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Typography Scale - Consistent heading hierarchy */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  h6 {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  /* GPU acceleration for clickable elements */
+  a,
+  button,
+  [role="button"],
+  [tabindex] {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  /* Spacing System - Semantic naming for consistent layout */
+
+  /* Section-level spacing (between major page sections) */
+  .spacing-section {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .spacing-section > * + * {
+    margin-top: 1.5rem;
+  }
+
+  /* Card-level spacing (between cards in a grid) */
+  .spacing-card {
+    gap: 1.5rem;
+  }
+
+  /* Inline spacing (between inline elements like buttons) */
+  .spacing-inline {
+    gap: 1rem;
+  }
+
+  /* Compact spacing (for dense layouts like lists) */
+  .spacing-compact {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .spacing-compact > * + * {
+    margin-top: 0.75rem;
+  }
+
+  /* Tight spacing (for form fields and related elements) */
+  .spacing-tight {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .spacing-tight > * + * {
+    margin-top: 0.5rem;
+  }
+
+  /* Typography utilities for semantic usage */
+  .text-heading-1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .text-heading-2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .text-heading-3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .text-heading-4 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  /* Hover glow effect - modern subtle shadow */
+  .hover-glow {
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hover-glow:hover {
+    box-shadow:
+      0 8px 16px -4px hsl(var(--primary) / 0.1),
+      0 2px 4px -2px hsl(var(--foreground) / 0.05);
+  }
+
+  /* Button press effect */
+  .btn-press:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  /* Skeleton loading animation */
+  .skeleton-loading {
+    background: linear-gradient(
+      90deg,
+      var(--muted) 0%,
+      oklch(0.97 0.003 250) 50%,
+      var(--muted) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Skeleton pulse - subtle opacity animation */
+  @keyframes skeleton-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  /* Skeleton wave - alternative shimmer effect */
+  @keyframes skeleton-wave {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Fade in up - for empty states */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.3s ease-out;
+  }
+
+  /* Subtle bounce - for icons */
+  @keyframes bounceSubtle {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .animate-bounce-subtle {
+    animation: bounceSubtle 2s ease-in-out infinite;
+  }
+
+  /* Page fade in - fast and subtle */
+  .animate-fade-in {
+    animation: pageFadeIn 0.15s ease-out;
+  }
+
+  @keyframes pageFadeIn {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Fade in animation - optimized for speed */
+  .animate-in {
+    animation: fadeIn 0.15s ease-out forwards;
+    will-change: transform, opacity;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Slide in from left - optimized for speed */
+  .slide-in-left {
+    animation: slideInLeft 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Stagger animation for lists - optimized for page transitions */
+  .stagger-item {
+    animation: staggerIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
+    /* Only animate on initial load, not on every page transition */
+    animation: none;
+  }
+
+  /* Apply stagger animation only on first page load */
+  body:first-child .stagger-item {
+    animation: staggerIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .stagger-item:nth-child(1) {
+    animation-delay: 0.02s;
+  }
+  .stagger-item:nth-child(2) {
+    animation-delay: 0.04s;
+  }
+  .stagger-item:nth-child(3) {
+    animation-delay: 0.06s;
+  }
+  .stagger-item:nth-child(4) {
+    animation-delay: 0.08s;
+  }
+  .stagger-item:nth-child(5) {
+    animation-delay: 0.1s;
+  }
+
+  @keyframes staggerIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* GPU acceleration for animated elements */
+  .animate-in,
+  .slide-in-left,
+  .stagger-item,
+  .fade-in-up,
+  .hover-glow {
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Off-screen content optimization */
+  main > section {
+    contain: layout style paint;
+    content-visibility: auto;
+  }
+
+  /* Optimize rendering for cards */
+  .card,
+  .rounded-xl,
+  .shadow-sm {
+    contain: layout style;
+  }
+
+  /* Brand accent underline */
+  .brand-accent {
+    position: relative;
+  }
+  .brand-accent::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+}
+
+/* Scrollbar styling - Modern subtle */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.75 0.005 250);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.65 0.01 250);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Touch-friendly minimum sizes */
+.touch-target {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+}
+
+/* Scroll indicator gradients */
+.scroll-indicator-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2rem;
+  background: linear-gradient(to right, hsl(var(--background)), transparent);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.scroll-indicator-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 2rem;
+  background: linear-gradient(to left, hsl(var(--background)), transparent);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Mobile card spacing */
+.mobile-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .mobile-card-list {
+    display: none;
+  }
+}
+
+/* Focus ring utility for accessibility */
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--ring) / 0.5);
+  border-color: hsl(var(--ring));
+}
+
+/* Print Styles */
+@media print {
+  /* Hide non-essential elements */
+  nav,
+  aside,
+  header,
+  footer,
+  .no-print,
+  button:not(.print-show),
+  [role="dialog"] {
+    display: none !important;
+  }
+
+  /* Reset layout for print */
+  body,
+  main,
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Ensure text is readable */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Table adjustments */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  td,
+  th {
+    border: 1px solid #ddd !important;
+    padding: 8px !important;
+    color: black !important;
+  }
+
+  /* Link handling */
+  a {
+    text-decoration: none !important;
+    color: black !important;
+  }
+
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Card styling removal */
+  .card,
+  .rounded-xl,
+  .shadow-sm {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Spacing adjustments */
+  .spacing-section {
+    margin: 1rem 0 !important;
+  }
+}

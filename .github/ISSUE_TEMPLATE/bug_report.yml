@@ -1,0 +1,84 @@
+name: 🐛 Bug Raporu
+description: Bir hata bildirin
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hata bildirimi için teşekkürler! Lütfen aşağıdaki formu eksiksiz doldurun.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Hata Açıklaması
+      description: Hatanın açık ve net bir açıklamasını yazın.
+      placeholder: Hatayı detaylı açıklayın...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Nasıl Tekrarlanır?
+      description: Hatayı tekrarlamak için adımları yazın.
+      placeholder: |
+        1. '...' sayfasına git
+        2. '...' butonuna tıkla
+        3. Aşağı kaydır...
+        4. Hatayı gör
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Beklenen Davranış
+      description: Ne olmasını bekliyordunuz?
+      placeholder: Beklenen davranışı açıklayın...
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Ekran Görüntüleri
+      description: Varsa ekran görüntüsü ekleyin.
+      placeholder: Ekran görüntülerini buraya sürükleyin...
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Tarayıcı
+      description: Hangi tarayıcıda yaşadınız?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Diğer
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Tarayıcı Versiyonu
+      description: Tarayıcı versiyonunuz nedir?
+      placeholder: örn. 120.0.6099.199
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Cihaz
+      description: Hangi cihazda yaşadınız?
+      options:
+        - Desktop
+        - Mobile
+        - Tablet
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Ek Bilgiler
+      description: Eklemek istediğiniz başka bir şey var mı?

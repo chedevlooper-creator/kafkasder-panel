@@ -1,0 +1,1116 @@
+openapi: 3.0.3
+info:
+  title: Kafkas Derneği Panel API
+  description: Kafkas Derneği yönetim paneli API dokümantasyonu
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@kafkasder.org
+
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+  - url: https://api.kafkasder.org/api
+    description: Production server
+
+tags:
+  - name: Authentication
+    description: Kimlik doğrulama işlemleri
+  - name: Members
+    description: Üye yönetimi işlemleri
+  - name: Donations
+    description: Bağış yönetimi işlemleri
+  - name: Social Aid
+    description: Sosyal yardım başvuru işlemleri
+  - name: Documents
+    description: Doküman yönetimi işlemleri
+  - name: Settings
+    description: Ayar yönetimi işlemleri
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Kullanıcı girişi
+      description: E-posta ve şifre ile kullanıcı girişi yapar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  example: password123
+      responses:
+        '200':
+          description: Başarılı giriş
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      email:
+                        type: string
+                  session:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      refresh_token:
+                        type: string
+                      expires_at:
+                        type: integer
+        '401':
+          description: Geçersiz kimlik bilgileri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: Geçersiz istek
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Kullanıcı çıkışı
+      description: Kullanıcı oturumunu sonlandırır
+      responses:
+        '200':
+          description: Başarılı çıkış
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Çıkış başarılı
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Oturum yenileme
+      description: Refresh token ile yeni access token alır
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: Başarılı yenileme
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      refresh_token:
+                        type: string
+                      expires_at:
+                        type: integer
+        '401':
+          description: Geçersiz refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /members:
+    get:
+      tags:
+        - Members
+      summary: Üye listesi
+      description: Tüm üyeleri sayfalı olarak getirir
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: search
+          in: query
+          schema:
+            type: string
+            description: Ad, soyad veya TC Kimlik No ile arama
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags:
+        - Members
+      summary: Yeni üye oluştur
+      description: Sisteme yeni üye ekler
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberInput'
+      responses:
+        '201':
+          description: Üye başarıyla oluşturuldu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /members/{id}:
+    get:
+      tags:
+        - Members
+      summary: Üye detayı
+      description: Belirli bir üyenin detaylarını getirir
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '404':
+          description: Üye bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - Members
+      summary: Üye güncelle
+      description: Belirli bir üyeyi günceller
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberUpdateInput'
+      responses:
+        '200':
+          description: Başarılı güncelleme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Üye bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Members
+      summary: Üye sil
+      description: Belirli bir üyeyi siler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Başarılı silme
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Üye başarıyla silindi
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /donations:
+    get:
+      tags:
+        - Donations
+      summary: Bağış listesi
+      description: Tüm bağışları sayfalı olarak getirir
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: search
+          in: query
+          schema:
+            type: string
+            description: Bağışçı adı ile arama
+        - name: amac
+          in: query
+          schema:
+            type: string
+            description: Bağış amacına göre filtrele
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags:
+        - Donations
+      summary: Yeni bağış oluştur
+      description: Sisteme yeni bağış ekler
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DonationInput'
+      responses:
+        '201':
+          description: Bağış başarıyla oluşturuldu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donation'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /donations/{id}:
+    get:
+      tags:
+        - Donations
+      summary: Bağış detayı
+      description: Belirli bir bağışın detaylarını getirir
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donation'
+        '404':
+          description: Bağış bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - Donations
+      summary: Bağış güncelle
+      description: Belirli bir bağışı günceller
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DonationUpdateInput'
+      responses:
+        '200':
+          description: Başarılı güncelleme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Donation'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Bağış bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Donations
+      summary: Bağış sil
+      description: Belirli bir bağışı siler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Başarılı silme
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Bağış başarıyla silindi
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /social-aid:
+    get:
+      tags:
+        - Social Aid
+      summary: Sosyal yardım başvuru listesi
+      description: Tüm sosyal yardım başvurularını sayfalı olarak getirir
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: durum
+          in: query
+          schema:
+            type: string
+            description: Duruma göre filtrele
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResponse'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags:
+        - Social Aid
+      summary: Yeni sosyal yardım başvurusu oluştur
+      description: Sisteme yeni sosyal yardım başvurusu ekler
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialAidApplicationInput'
+      responses:
+        '201':
+          description: Başvuru başarıyla oluşturuldu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialAidApplication'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /social-aid/{id}:
+    get:
+      tags:
+        - Social Aid
+      summary: Başvuru detayı
+      description: Belirli bir başvurunun detaylarını getirir
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialAidApplication'
+        '404':
+          description: Başvuru bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - Social Aid
+      summary: Başvuru güncelle
+      description: Belirli bir başvuruyu günceller
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialAidApplicationUpdateInput'
+      responses:
+        '200':
+          description: Başarılı güncelleme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocialAidApplication'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Başvuru bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /documents:
+    get:
+      tags:
+        - Documents
+      summary: Doküman listesi
+      description: Belirli bir ihtiyaç sahibinin dokümanlarını getirir
+      parameters:
+        - name: beneficiary_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+        '400':
+          description: Eksik parametre
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags:
+        - Documents
+      summary: Doküman yükle
+      description: Sisteme yeni doküman yükler
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - beneficiary_id
+                - document_type
+              properties:
+                file:
+                  type: string
+                  format: binary
+                beneficiary_id:
+                  type: string
+                document_type:
+                  type: string
+                  enum: [kimlik, ikametgah, gelir-belgesi, saglik-raporu, ogrenci-belgesi, diger]
+      responses:
+        '201':
+          description: Doküman başarıyla yüklendi
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '400':
+          description: Geçersiz veri veya dosya
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /documents/{id}:
+    get:
+      tags:
+        - Documents
+      summary: Doküman URL al
+      description: Belirli bir dokümanın indirme URL'sini getirir
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Documents
+      summary: Doküman sil
+      description: Belirli bir dokümanı siler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - file_path
+              properties:
+                file_path:
+                  type: string
+      responses:
+        '200':
+          description: Başarılı silme
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Doküman başarıyla silindi
+        '400':
+          description: Eksik parametre
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /settings:
+    get:
+      tags:
+        - Settings
+      summary: Ayar listesi
+      description: Tüm ayarları getirir
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Setting'
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags:
+        - Settings
+      summary: Yeni ayar oluştur
+      description: Sisteme yeni ayar ekler
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingInput'
+      responses:
+        '201':
+          description: Ayar başarıyla oluşturuldu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /settings/{id}:
+    get:
+      tags:
+        - Settings
+      summary: Ayar detayı
+      description: Belirli bir ayarın detaylarını getirir
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Başarılı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+        '404':
+          description: Ayar bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - Settings
+      summary: Ayar güncelle
+      description: Belirli bir ayarı günceller
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingUpdateInput'
+      responses:
+        '200':
+          description: Başarılı güncelleme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Setting'
+        '400':
+          description: Geçersiz veri
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Ayar bulunamadı
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Settings
+      summary: Ayar sil
+      description: Belirli bir ayarı siler
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Başarılı silme
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Ayar başarıyla silindi
+        '500':
+          description: Sunucu hatası
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Hata mesajı
+        message:
+          type: string
+          example: Detaylı hata açıklaması
+
+    PaginatedResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: {}
+        total:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalPages:
+          type: integer
+
+    MemberInput:
+      type: object
+      required:
+        - tc_kimlik_no
+        - ad
+        - soyad
+        - cinsiyet
+        - telefon
+        - uye_turu
+      properties:
+        tc_kimlik_no:
+          type: string
+          minLength: 11
+          maxLength: 11
+        ad:
+          type: string
+          minLength: 2
+        soyad:
+          type: string
+          minLength: 2
+        dogum_tarihi:
+          type: string
+          format: date
+        cinsiyet:
+          type: string
+          enum: [erkek, kadin]
+        telefon:
+          type: string
+          minLength: 10
+        email:
+          type: string
+          format: email
+        adres:
+          type: string
+        uye_turu:
+          type: string
+          enum: [onursal, standart, fahri]
+        aidat_durumu:
+          type: string
+          enum: [odendi, gecikti, beklemede]
+        kayit_tarihi:
+          type: string
+          format: date
+
+    MemberUpdateInput:
+      allOf:
+        - $ref: '#/components/schemas/MemberInput'
+      type: object
+
+    Member:
+      allOf:
+        - $ref: '#/components/schemas/MemberInput'
+      type: object
+      properties:
+        id:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    DonationInput:
+      type: object
+      required:
+        - bagisci_adi
+        - tutar
+        - currency
+        - amac
+        - odeme_yontemi
+      properties:
+        member_id:
+          type: number
+        bagisci_adi:
+          type: string
+          minLength: 2
+        tutar:
+          type: number
+          exclusiveMinimum: 0
+        currency:
+          type: string
+          enum: [TRY, USD, EUR]
+        amac:
+          type: string
+          enum: [genel, kumbara, sosyal-yardim, etkinlik, diger]
+        odeme_yontemi:
+          type: string
+          enum: [kumbara, nakit, havale, kredi_karti]
+        tarih:
+          type: string
+          format: date
+        not:
+          type: string
+
+    DonationUpdateInput:
+      allOf:
+        - $ref: '#/components/schemas/DonationInput'
+      type: object
+
+    Donation:
+      allOf:
+        - $ref: '#/components/schemas/DonationInput'
+      type: object
+      properties:
+        id:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    SocialAidApplicationInput:
+      type: object
+      required:
+        - beneficiary_id
+        - yardim_turu
+        - gerekce
+      properties:
+        beneficiary_id:
+          type: number
+        yardim_turu:
+          type: string
+          enum: [gida, egitim, saglik, barinma, giyim, diger]
+        talep_edilen_tutar:
+          type: number
+        gerekce:
+          type: string
+          minLength: 10
+        durum:
+          type: string
+          enum: [beklemede, inceleniyor, onaylandi, reddeddi]
+
+    SocialAidApplicationUpdateInput:
+      allOf:
+        - $ref: '#/components/schemas/SocialAidApplicationInput'
+      type: object
+
+    SocialAidApplication:
+      allOf:
+        - $ref: '#/components/schemas/SocialAidApplicationInput'
+      type: object
+      properties:
+        id:
+          type: number
+        basvuru_tarihi:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        beneficiary_id:
+          type: string
+        file_name:
+          type: string
+        file_path:
+          type: string
+        file_type:
+          type: string
+        file_size:
+          type: number
+        document_type:
+          type: string
+          enum: [kimlik, ikametgah, gelir-belgesi, saglik-raporu, ogrenci-belgesi, diger]
+        created_at:
+          type: string
+          format: date-time
+
+    SettingInput:
+      type: object
+      required:
+        - key
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        category:
+          type: string
+          enum: [genel, uyelik, bagis, sosyal-yardim, sistem]
+        description:
+          type: string
+
+    SettingUpdateInput:
+      allOf:
+        - $ref: '#/components/schemas/SettingInput'
+      type: object
+
+    Setting:
+      allOf:
+        - $ref: '#/components/schemas/SettingInput'
+      type: object
+      properties:
+        id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Genel Sorular ve Tartışma
+    url: https://github.com/Kafkasportal/Portal/discussions
+    about: Genel sorular, öneriler ve tartışmalar için Discussions kullanın
+  - name: 📖 Dokümantasyon
+    url: https://github.com/Kafkasportal/Portal/blob/main/docs
+    about: Proje dokümantasyonunu görüntüleyin
+  - name: 🚀 Deployment Rehberi
+    url: https://github.com/Kafkasportal/Portal/blob/main/DEPLOYMENT.md
+    about: Deployment ve production kurulum rehberi
