@@ -55,13 +55,13 @@ export default function LoginPage() {
 
   return (
     <div className="w-full max-w-sm mx-auto animate-in fade-in-0 zoom-in-95 duration-500">
-      {/* Login Card */}
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+      {/* Login Card - Shadcn Style */}
+      <div className="bg-card rounded-xl shadow-lg border overflow-hidden">
         <div className="px-6 py-8">
           {/* Header */}
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">Giriş Yap</h1>
-            <p className="text-sm text-gray-500">Hesabınıza erişin</p>
+            <h1 className="text-2xl font-bold mb-1">Giriş Yap</h1>
+            <p className="text-sm text-muted-foreground">Hesabınıza erişin</p>
           </div>
 
           {/* Form */}
@@ -73,14 +73,14 @@ export default function LoginPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                    <FormLabel className="text-xs font-semibold uppercase tracking-wide">
                       E-posta
                     </FormLabel>
                     <FormControl>
                       <Input
                         type="email"
                         placeholder="ornek@kafkasder.org"
-                        className="h-11 bg-gray-50 border-gray-200 focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                        className="h-11"
                         {...field}
                         onBlur={(e) => {
                           field.onChange(e.target.value.trim());
@@ -99,7 +99,7 @@ export default function LoginPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                    <FormLabel className="text-xs font-semibold uppercase tracking-wide">
                       Şifre
                     </FormLabel>
                     <FormControl>
@@ -107,7 +107,7 @@ export default function LoginPage() {
                         <Input
                           type={showPassword ? "text" : "password"}
                           placeholder="••••••••"
-                          className="h-11 pr-10 bg-gray-50 border-gray-200 focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 transition-all"
+                          className="h-11 pr-10"
                           {...field}
                           onChange={(e) =>
                             field.onChange(e.target.value.trim())
@@ -116,7 +116,7 @@ export default function LoginPage() {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                         >
                           {showPassword ? (
                             <EyeOff className="h-4 w-4" />
@@ -144,12 +144,11 @@ export default function LoginPage() {
                             id="remember"
                             checked={field.value}
                             onCheckedChange={field.onChange}
-                            className="border-gray-300 data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600"
                           />
                         </FormControl>
                         <FormLabel
                           htmlFor="remember"
-                          className="text-xs font-medium text-gray-600 cursor-pointer"
+                          className="text-xs font-medium cursor-pointer"
                         >
                           Beni hatırla
                         </FormLabel>
@@ -159,7 +158,7 @@ export default function LoginPage() {
                 />
                 <button
                   type="button"
-                  className="text-xs font-semibold text-teal-600 hover:text-teal-700 transition-colors"
+                  className="text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
                 >
                   Şifremi unuttum?
                 </button>
@@ -169,7 +168,8 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-11 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold shadow-lg shadow-teal-500/20 hover:shadow-xl hover:shadow-teal-500/30 transition-all duration-300"
+                className="w-full h-11"
+                size="lg"
               >
                 {isLoading ? (
                   <>
@@ -185,12 +185,12 @@ export default function LoginPage() {
         </div>
 
         {/* Demo Info */}
-        <div className="bg-gray-50 px-6 py-4 border-t border-gray-100">
+        <div className="bg-muted/50 px-6 py-4 border-t">
           <div className="text-center">
-            <p className="text-xs font-semibold text-gray-700 mb-1">
+            <p className="text-xs font-semibold mb-1">
               Demo Hesap
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               Herhangi bir e-posta ve 6+ karakter şifre ile giriş yapabilirsiniz
             </p>
           </div>
@@ -198,7 +198,7 @@ export default function LoginPage() {
       </div>
 
       {/* Footer */}
-      <p className="text-center text-xs text-gray-400 mt-6">
+      <p className="text-center text-xs text-muted-foreground mt-6">
         © 2026 Kafkas Göçmenleri Derneği
       </p>
     </div>

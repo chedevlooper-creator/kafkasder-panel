@@ -24,17 +24,17 @@ export const StatCard = memo(function StatCard({
   className,
 }: StatCardProps) {
   const variantStyles = {
-    default: "bg-card",
-    success: "bg-success/10 border-success/20",
-    warning: "bg-warning/10 border-warning/20",
-    destructive: "bg-destructive/10 border-destructive/20",
+    default: "border border-border/50 shadow-sm hover:shadow-md transition-shadow",
+    success: "border-success/20 bg-success/5 shadow-sm hover:shadow-md transition-shadow",
+    warning: "border-warning/20 bg-warning/5 shadow-sm hover:shadow-md transition-shadow",
+    destructive: "border-destructive/20 bg-destructive/5 shadow-sm hover:shadow-md transition-shadow",
   };
 
   const iconStyles = {
     default: "bg-primary/10 text-primary",
-    success: "bg-success/20 text-success",
-    warning: "bg-warning/20 text-warning",
-    destructive: "bg-destructive/20 text-destructive",
+    success: "bg-success/10 text-success",
+    warning: "bg-warning/10 text-warning",
+    destructive: "bg-destructive/10 text-destructive",
   };
 
   const getTrendIcon = () => {
@@ -54,21 +54,31 @@ export const StatCard = memo(function StatCard({
   return (
     <Card
       className={cn(
-        "hover-glow hover:scale-[1.02] active:scale-[0.98] cursor-pointer transition-all duration-300",
         variantStyles[variant],
         className,
       )}
     >
       <CardContent className="p-6">
-        <div className="flex items-start justify-between">
-          <div className="spacing-tight">
-            <p className="text-sm text-foreground/70 font-medium">{label}</p>
+        <div className="flex items-center gap-4">
+          {Icon && (
+            <div
+              className={cn(
+                "h-12 w-12 rounded-lg flex items-center justify-center flex-shrink-0",
+                iconStyles[variant],
+              )}
+            >
+              <Icon className="h-6 w-6" />
+            </div>
+          )}
+          
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-muted-foreground font-medium mb-1">{label}</p>
             <p className="text-2xl font-bold tracking-tight">{value}</p>
 
             {(trend !== undefined || trendLabel) && (
               <div
                 className={cn(
-                  "flex items-center gap-1 text-sm animate-in",
+                  "flex items-center gap-1 text-xs mt-1",
                   getTrendColor(),
                 )}
               >
@@ -81,17 +91,6 @@ export const StatCard = memo(function StatCard({
               </div>
             )}
           </div>
-
-          {Icon && (
-            <div
-              className={cn(
-                "p-3 rounded-xl hover:rotate-3 transition-transform duration-300",
-                iconStyles[variant],
-              )}
-            >
-              <Icon className="h-6 w-6" />
-            </div>
-          )}
         </div>
       </CardContent>
     </Card>

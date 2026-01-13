@@ -179,7 +179,7 @@ export default function BeneficiariesPage() {
       </div>
 
       {/* Filtreleme Alanı */}
-      <div className="bg-card flex flex-wrap items-end gap-3 rounded-lg border p-4">
+      <div className="border border-border/50 bg-card shadow-sm flex flex-wrap items-end gap-3 rounded-xl p-4">
         <div className="space-y-1.5">
           <label className="text-muted-foreground text-xs">ID</label>
           <Input
@@ -372,8 +372,8 @@ export default function BeneficiariesPage() {
       </div>
 
       {/* Veri Tablosu */}
-      <div className="overflow-hidden rounded-lg border">
-        <div className="overflow-x-auto">
+        <div className="border border-border/50 shadow-sm rounded-xl overflow-hidden">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50 hover:bg-muted/50">
@@ -424,7 +424,7 @@ export default function BeneficiariesPage() {
                 filteredData.map((item: IhtiyacSahibi, index: number) => (
                   <TableRow
                     key={item.id}
-                    className={`cursor-pointer transition-colors ${index % 2 === 0 ? 'bg-background' : 'bg-muted/20'} hover:bg-primary/10`}
+                    className="cursor-pointer transition-colors hover:bg-muted/50"
                   >
                     <TableCell>
                       <Link

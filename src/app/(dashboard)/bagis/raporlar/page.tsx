@@ -286,14 +286,14 @@ export default function ReportsPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        <Card>
+        <Card className="border border-border/50 shadow-sm">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-primary/10 rounded-xl p-3">
+              <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
                 <FileText className="text-primary h-6 w-6" />
               </div>
               <div>
-                <p className="text-muted-foreground text-sm">Toplam Bağış</p>
+                <p className="text-muted-foreground text-xs">Toplam Bağış</p>
                 <p className="text-2xl font-bold">
                   {formatCurrency(totalAmount)}
                 </p>
@@ -301,27 +301,27 @@ export default function ReportsPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border border-border/50 shadow-sm">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-success/10 rounded-xl p-3">
+              <div className="h-12 w-12 rounded-lg bg-success/10 flex items-center justify-center">
                 <TrendingUp className="text-success h-6 w-6" />
               </div>
               <div>
-                <p className="text-muted-foreground text-sm">Bağış Sayısı</p>
+                <p className="text-muted-foreground text-xs">Bağış Sayısı</p>
                 <p className="text-2xl font-bold">{totalCount}</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border border-border/50 shadow-sm">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-warning/10 rounded-xl p-3">
+              <div className="h-12 w-12 rounded-lg bg-warning/10 flex items-center justify-center">
                 <Calendar className="text-warning h-6 w-6" />
               </div>
               <div>
-                <p className="text-muted-foreground text-sm">Ortalama Tutar</p>
+                <p className="text-muted-foreground text-xs">Ortalama Tutar</p>
                 <p className="text-2xl font-bold">
                   {formatCurrency(avgAmount)}
                 </p>
@@ -329,14 +329,14 @@ export default function ReportsPage() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border border-border/50 shadow-sm">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
-              <div className="bg-chart-4/10 rounded-xl p-3">
+              <div className="h-12 w-12 rounded-lg bg-chart-4/10 flex items-center justify-center">
                 <FileText className="text-chart-4 h-6 w-6" />
               </div>
               <div>
-                <p className="text-muted-foreground text-sm">Rapor Tarihi</p>
+                <p className="text-muted-foreground text-xs">Rapor Tarihi</p>
                 <p className="text-lg font-bold">{formatDate(new Date())}</p>
               </div>
             </div>
@@ -347,7 +347,7 @@ export default function ReportsPage() {
       {/* Charts */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Monthly Donations Chart */}
-        <Card className="hover-glow border-border/50 shadow-sm">
+        <Card className="border border-border/50 shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-semibold">
               Aylık Bağış Grafiği
@@ -437,7 +437,7 @@ export default function ReportsPage() {
         </Card>
 
         {/* Purpose Distribution */}
-        <Card className="hover-glow border-border/50 shadow-sm">
+        <Card className="border border-border/50 shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg font-semibold">
               Amaç Dağılımı
@@ -502,7 +502,7 @@ export default function ReportsPage() {
         </Card>
 
         {/* Status Distribution */}
-        <Card className="hover-glow border-border/50 shadow-sm lg:col-span-2">
+        <Card className="border border-border/50 shadow-sm lg:col-span-2">
           <CardHeader>
             <CardTitle className="text-lg font-semibold">
               Durum Dağılımı

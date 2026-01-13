@@ -177,7 +177,7 @@ export default function SettingsPage() {
 
         {/* Organization Settings */}
         <TabsContent value="organization" className="space-y-6">
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-primary" />
@@ -316,7 +316,7 @@ export default function SettingsPage() {
 
         {/* Notifications */}
         <TabsContent value="notifications" className="space-y-6">
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Bell className="h-5 w-5 text-primary" />
@@ -327,9 +327,9 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-center justify-between p-4 rounded-lg border bg-card">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-border/50 bg-card hover:bg-muted/50 transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-2 rounded-lg bg-blue-500/10">
+                  <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
                     <Mail className="h-5 w-5 text-blue-500" />
                   </div>
                   <div className="space-y-0.5">
@@ -347,9 +347,9 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <div className="flex items-center justify-between p-4 rounded-lg border bg-card">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-border/50 bg-card hover:bg-muted/50 transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-2 rounded-lg bg-purple-500/10">
+                  <div className="h-10 w-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
                     <Monitor className="h-5 w-5 text-purple-500" />
                   </div>
                   <div className="space-y-0.5">
@@ -367,9 +367,9 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <div className="flex items-center justify-between p-4 rounded-lg border bg-card">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-border/50 bg-card hover:bg-muted/50 transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="p-2 rounded-lg bg-green-500/10">
+                  <div className="h-10 w-10 rounded-lg bg-green-500/10 flex items-center justify-center">
                     <Smartphone className="h-5 w-5 text-green-500" />
                   </div>
                   <div className="space-y-0.5">
@@ -390,37 +390,37 @@ export default function SettingsPage() {
               <Separator />
 
               <div className="grid gap-4 md:grid-cols-2">
-                <div className="flex items-center justify-between p-3 rounded-lg border">
-                  <Label>Yeni Üye Kaydı</Label>
-                  <Switch
-                    checked={notifications.newMember}
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border/50">
+                <Label>Yeni Üye Kaydı</Label>
+                <Switch
+                  checked={notifications.newMember}
                     onCheckedChange={(checked) =>
                       setNotifications({ ...notifications, newMember: checked })
                     }
                   />
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg border">
-                  <Label>Bağış Bildirimleri</Label>
-                  <Switch
-                    checked={notifications.donation}
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border/50">
+                <Label>Bağış Bildirimleri</Label>
+                <Switch
+                  checked={notifications.donation}
                     onCheckedChange={(checked) =>
                       setNotifications({ ...notifications, donation: checked })
                     }
                   />
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg border">
-                  <Label>Sosyal Yardım</Label>
-                  <Switch
-                    checked={notifications.socialAid}
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border/50">
+                <Label>Sosyal Yardım</Label>
+                <Switch
+                  checked={notifications.socialAid}
                     onCheckedChange={(checked) =>
                       setNotifications({ ...notifications, socialAid: checked })
                     }
                   />
                 </div>
-                <div className="flex items-center justify-between p-3 rounded-lg border">
-                  <Label>Aylık Rapor</Label>
-                  <Switch
-                    checked={notifications.monthlyReport}
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border/50">
+                <Label>Aylık Rapor</Label>
+                <Switch
+                  checked={notifications.monthlyReport}
                     onCheckedChange={(checked) =>
                       setNotifications({
                         ...notifications,
@@ -446,7 +446,7 @@ export default function SettingsPage() {
 
         {/* Display Settings */}
         <TabsContent value="display" className="space-y-6">
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Palette className="h-5 w-5 text-primary" />
@@ -460,23 +460,23 @@ export default function SettingsPage() {
                 <div className="grid grid-cols-3 gap-4">
                   <button
                     onClick={() => setDisplay({ ...display, theme: "light" })}
-                    className={`p-4 rounded-lg border-2 transition-all ${display.theme === "light" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}
+                    className={`p-4 rounded-lg border-2 transition-all ${display.theme === "light" ? "border-primary bg-primary/5" : "border-border/50 hover:border-primary/50"}`}
                   >
                     <Sun className="h-8 w-8 mx-auto mb-2 text-yellow-500" />
                     <span className="text-sm font-medium">Açık</span>
                   </button>
                   <button
                     onClick={() => setDisplay({ ...display, theme: "dark" })}
-                    className={`p-4 rounded-lg border-2 transition-all ${display.theme === "dark" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}
+                    className={`p-4 rounded-lg border-2 transition-all ${display.theme === "dark" ? "border-primary bg-primary/5" : "border-border/50 hover:border-primary/50"}`}
                   >
                     <Moon className="h-8 w-8 mx-auto mb-2 text-blue-500" />
                     <span className="text-sm font-medium">Koyu</span>
                   </button>
                   <button
                     onClick={() => setDisplay({ ...display, theme: "system" })}
-                    className={`p-4 rounded-lg border-2 transition-all ${display.theme === "system" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}
+                    className={`p-4 rounded-lg border-2 transition-all ${display.theme === "system" ? "border-primary bg-primary/5" : "border-border/50 hover:border-primary/50"}`}
                   >
-                    <Monitor className="h-8 w-8 mx-auto mb-2 text-gray-500" />
+                    <Monitor className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
                     <span className="text-sm font-medium">Sistem</span>
                   </button>
                 </div>
@@ -586,7 +586,7 @@ export default function SettingsPage() {
 
         {/* Security */}
         <TabsContent value="security" className="space-y-6">
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Lock className="h-5 w-5 text-primary" />
@@ -655,7 +655,7 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Shield className="h-5 w-5 text-primary" />
@@ -663,7 +663,7 @@ export default function SettingsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="flex items-center justify-between p-4 rounded-lg border">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-border/50">
                 <div className="space-y-0.5">
                   <div className="flex items-center gap-2">
                     <Label className="text-base">İki Faktörlü Doğrulama</Label>
@@ -685,7 +685,7 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <div className="flex items-center justify-between p-4 rounded-lg border">
+              <div className="flex items-center justify-between p-4 rounded-lg border border-border/50">
                 <div className="space-y-0.5">
                   <Label className="text-base">Giriş Uyarıları</Label>
                   <p className="text-sm text-muted-foreground">
@@ -735,7 +735,7 @@ export default function SettingsPage() {
 
         {/* System */}
         <TabsContent value="system" className="space-y-6">
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Database className="h-5 w-5 text-primary" />
@@ -771,7 +771,7 @@ export default function SettingsPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Settings className="h-5 w-5 text-primary" />
@@ -791,7 +791,7 @@ export default function SettingsPage() {
 
         {/* Profile */}
         <TabsContent value="profile" className="space-y-6">
-          <Card>
+          <Card className="border border-border/50 shadow-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="h-5 w-5 text-primary" />
